@@ -1,0 +1,44 @@
+* Functional Component : (AKA Stateless/ Dumb/ Presentational)  { Please Verify Hooks too especially for state }
+ 
+    => Simple Functions
+    => Absence of 'this' Keyword
+    => Solution without using state
+-------------------------------------------------------------------------------------------------------------------------------
+
+* Class component: (AKA Stateful/ Smart/ Conatiner)
+
+    => Complex UI logic
+    => Maintain their own private data -> State
+    => Provide Lifecycle hooks
+-------------------------------------------------------------------------------------------------------------------------------
+
+* Hooks => In React 16.7.O alpha, Functional components are allowed to use state and other react feature without writing a class
+        => Lifecycle also can be handled in Functional component
+-------------------------------------------------------------------------------------------------------------------------------
+
+***** Points on using Hooks! *****
+
+    => No breaking changes
+    => Completely optional (basically we can build UI without knowing hooks)
+--------------------------------------------------------------------------------------------------------------------------------
+
+* JSX => JavaScript XML
+ 
+    # write XML-like code for elements and components
+    # JSX tags have tag name, attributes and children
+    # It is not necessity to write React applications but makes react code simpler and elegant
+    # It transpiles to pure JavaScript which is understood by the browsers
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+* JSX Differences
+
+    # class -> className
+    # for   -> htmlFor
+    # camelCase Property naming convention
+            1. onclick  -> onClick
+            2. tabindex -> tabIndex
+
+--------------------------------------------------------------------------------------------------------------------------------
+============================= ***  To be updated pls see in React Fire: Mordernizing React app! ***=============================
+--------------------------------------------------------------------------------------------------------------------------------
