@@ -16,6 +16,7 @@ class Welcome extends Component{
 
 export default Welcome;
 
+
 /*
     In class Component, we have to import Component from react lib!
     And Component should have Caps 'C'
