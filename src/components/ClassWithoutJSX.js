@@ -45,7 +45,7 @@ export default WithoutJSX;
 /*
 ======================================================================
 What I learned here is ... Functional component 
-        *** If u use function keyword then u shld do arrow func
+        *** If u use function keyword then u shld not use arrow func
                         only arrow func wrks on let, const, var *** 
 =======================================================================
 
@@ -54,3 +54,4 @@ What I learned here is ... Functional component
 
 =======================================================================
 */
+

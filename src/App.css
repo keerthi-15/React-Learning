@@ -38,5 +38,9 @@
 }
 .Greet{
   text-align: center;
-  color: aqua;
+  color:black;
+  font-family:'Times New Roman', Times, serif;
+  font-style: italic;
+  margin-top: 12px;
+  
 }

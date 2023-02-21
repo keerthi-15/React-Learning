@@ -1,4 +1,4 @@
-* Functional Component : (AKA Stateless/ Dumb/ Presentational)  { Please Verify Hooks too especially for state }
+* Functional Component : (AKA Stateless/ Dumb/ Presentational)  { Please Verify Hooks too, especially for state }
  
     => Simple Functions
     => Absence of 'this' Keyword
@@ -40,5 +40,561 @@
             2. tabindex -> tabIndex
 
 --------------------------------------------------------------------------------------------------------------------------------
-============================= ***  To be updated pls see in React Fire: Mordernizing React app! ***=============================
+============================= ***  To be updated pls see in React Fire: Mordernizing React app! *** ============================
 --------------------------------------------------------------------------------------------------------------------------------
+* Props - Properties
+
+    => Props are immutable i.e values cannot be changed because values are passed from parent component to child component
+    => Optional input a component can accept
+    => Allows the component to be dynamic  
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Steps to understand Props
+
+Illustration: 
+                # Here App.js is parent component
+                # And props.js is the child component
+                # props is mainly used to reuse the code
+                # please check console ( u'll get a object inside that props.name )
+                #  In the above illustration we know which content is being passed lyk name, heroName
+                # Sometimes we have no idea which content is passed, there we use props.children
+    
+--------------------------------------------------------------------------------------------------------------------------------
+Props vs State:
+
+========================= Props ==============================  |  ========================== State =============================
+                                                                |
+    * props get passed to the component                         |        * state is managed within the component
+                                                                |
+    * Function parameters                                       |        * Variables declared in a function body
+                                                                |
+    * props are immutable                                       |        * State can be changed
+                                                                |
+    * props      -> Functional components                       |        * useState Hook  -> Functional components (Hooks concept)  
+      this.props -> Class components                            |          this.state     -> Class components   
+                                                                |
+
+--------------------------------------------------------------------------------------------------------------------------------
+* setState({})
+
+    => Here we can use ES7 React snippet extension
+    => The console value will be less than 1 compared to the rendered value bcz,
+    => call for setState is Asynchronous, 
+    => the this.state.count is called before the state is actually set
+
+# Set state can take 2 parameters 
+        1. object
+        2. arrow function
+
+# Important Points on setState:
+
+    1. Always make use of setState and not modify state directly
+    2. If the code has to be updated after the state has been updated, place the code in call back function which is the 2nd param in setState method
+    3. when u want update the state as previous state value, pass in function as a argument instead of the regular object
+--------------------------------------------------------------------------------------------------------------------------------
+* Destructuring Props and states:
+
+    => Unpack values from arrays and properties from object 
+    => Improves code readability
+    => Destructuring is done by {}
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Event Handling:
+
+    => Whenever the user interacts, events are happened 
+        * Example: keypress, mouse click, mouse hover, change etc.
+    => Its is possible to write function inside an another function
+    => Event handler should be function and not function call
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Binding Event handlers:
+
+  Need --> Here if u call it will show ur application breaks this is because of this keyword is undefined
+           It shows, this keyword is undefined within our event handler, this is bcz of typical behavior in JS
+           Because of this keyword is undefined, binding of event handler is neceesary in react
+
+    => Method 1: Binding in render                  ---- Don't use this because of performance implications
+    => Method 2: Arrow function in render           ---- Similar to approach one, is probably easiest way to pass parameters, If our doesn't involve re-rendering nested children components this approach is good one. Has some performance implications in some scenarios
+    => Method 3: Binding in the class constructor   ---- Best one
+    => Method 4: class property as arrow function   ---- Best one
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Method as Props:
+
+    # First we've sent attributes as props , now we gonna send method as props, keenly observe the steps in MthdAsPropsParent.js and 
+    
+    ( Child accesing parent :) remember this )
+    (1st we done lyk every method is accesed in same component for rendering we'll call tht in app.js)
+    (tht attribute u will calling not directly the mthd)
+--------------------------------------------------------------------------------------------------------------------------------
+* this Keyword:
+
+=> this references the object that is executo=ing in the current function
+
+Eg1: normal function
+
+        var keer ={
+	    id:"hello",
+        obj:function(){
+        console.log(this.id)
+        }
+        };
+        keer.obj();
+
+    * Here this, refers to the obj that is executed inside the current fn
+
+Eg2: Arrow function
+
+        var keer ={
+	    id:"hello",
+        obj:function(){
+        setTimeout(()=>{console.log(this.id)},1000);
+        }
+        };
+        keer.obj();
+
+    * Here this, refers to the obj that is executed inside the parent function, this is done only because of arrow function for setTimeout
+
+Eg3: Function inside a function, to execute parent without using arrow function.
+
+        var keer ={
+	    id:"hello",
+        obj:function(){
+        var self=this      
+        setTimeout(function(){console.log(self.id)},1000);
+        }
+        };
+        keer.obj();
+
+Eg4: What if u directly use this to access parent obj, in nrml  (O/P will be undefined)
+
+        var keer ={
+	    id:"hello",
+        obj:function(){  
+        setTimeout(function(){console.log(this.id)},1000);
+        }
+        };
+        keer.obj();
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Backticks ( ` ):
+        * Used to define template literals. 
+        * Template literals are a new feature in ECMAScript 6 to make working with strings easier
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Conditional Rendering: 
+
+    Method 1: if/else => Doesn't wrk inside JSX, wrks in render (JSX is for => Function calls and object construction) < ur dbt k3 : JSX statement inside return >
+    Method 2: Element Variables => comapred to mthd 1 better approach
+    Method 3: Ternary Conditional Operator => can be used in JSX statement
+    Method 4: Short Circuit Operator => best one , BCZ no need of defining null ( && )
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+* List Rendering:
+
+    * map function  => map() method creates a new array with the results of calling a provided fn on every element in the calling array
+
+        Eg in JS: 
+                let array = [1,2,3,4];
+                const arr = array.map(i=>i*2);
+                console.log(arr);  
+
+            Output = [2,4,6,8]
+
+    * map function in React, takes function as argument and syntax is arrayname.map(x => <>{x}</>)
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+* In developer console, we will able to see warning message ' Each child in a list should have a unique "key" prop'
+    => Lists and Keys in React
+            => key prop  -- is element u need to create when u use list of elements and that should be unique
+                         -- u can't pass this prop to child component, bcz it won't get rendered and key prop is reserved
+                         
+* Key:
+    -> A "key" is a special string attribute, u need to include when creating lists of elements
+    -> Gives stable identity
+    -> Helps to identify which elements added/changed/removed
+    -> Efficient update for UI
+
+* what if in list of elements if u don't have unique element for such scenarios we use "INDEX AS KEY ANTI-PATTERNS"                       
+--------------------------------------------------------------------------------------------------------------------------------
+* Index as key Anti-Patterns
+
+    => If arrays don't have unique element , we use index as key anti-Patterns
+    => But be conscious when to use that
+            ---> The items in ur list do not have unique id
+            ---> The list ia static list and it will not change
+            ---> The list will never be reordered or filtered
+    
+    Example =>  https://codepen.io/gopinav/pen/gQpepq
+            => Refer IndexAsKeyAntiPattern.js
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Styling in React Components:
+    1. CSS Stylesheets
+    2. Inline Styling
+    3. CSS Modules ( available in "react-scripts": "4.0.3", version 2 or higher) {Need: This can be used particulary to one component which has been imported}
+    4. CSS in JS Libraries (Later we can see this) {Styled Component} good to know
+--------------------------------------------------------------------------------------------------------------------------------
+* Basics of Form Handling:
+    => Controlled components refer Basics of Form Handling.jpg in react folder
+--------------------------------------------------------------------------------------------------------------------------------
+* LifeCycle Methods:
+    => These methods are used only in class components (bt in hooks it partially changes)
+        (These methods are for React version 16 and above)
+    => Methods are classified into 4 phases: ( Refer LifeCycleMethods.jpg )
+        * Mounting       -> When an instance of a component is being created or inserted into the DOM
+        * Updating       -> When a component is being re-rendered as result of changes to either its props or state
+        * Unmounting     -> When component is being removed from the DOM 
+        * Error Handling -> When there is an error during rendering, in a Lifecycle method, or in a constructor of any child component  
+
+                                                                 4 Phases
+                                                                     |
+                                                                     |
+            -----------------------------------------------------------------------------------------------------------------                                                                 
+            |                               |                                           |                                   |
+        Mounting                          Updating                                  Unmounting                       Error Handling
+    * constructor                       * static getDerivedStateFromProps       * componentWillUnmount            * componentDidCatch
+    * static getDerivedStateFromProps   * shouldComponentUpdate                 * static getDerivedStateFromError
+    * componentDidMount                 * componentDidUpdate
+    * render                            * render
+
+* Refer notes, images in folder and w3 schools
+* Please remember the order of execution, further we can learn more in Proj
+--------------------------------------------------------------------------------------------------------------------------------
+
+==================================================== *** Advanced Topics *** ===================================================
+* React Fragments:
+    => <React.Fragment /> --->this is used to wrap multiple elements, without including in the DOM tree 
+    => <td> cannot be child of <div> (This will be an error in console)
+    => <React.Fragment> also used to render array
+    => <React.Fragment> can also written as <> </>
+    => But one limitation that we can't add any attribute to <React.Fragment> (Note. now <React.Fragment> can take only key attribute)
+--------------------------------------------------------------------------------------------------------------------------------
+* Pure Component: (Refer PureComponent.jpg and PureComponentSummary.jpg)
+    Definition:
+        *  A pure component implements the shouldComponentUpdate, with shallow props and state comparison 
+
+     SC of prevProps with currentProps ------
+                                             | ----Difference ?---> Re-render Component
+     SC of prevStae with currentState -------
+
+        => Till now we created class component using React.Component, another way to create class componentis by pure component
+        => For this the code snippet will be rpce
+    Use:
+        => Prevents unnecessary renders, can give u performance boost in certain scenarios
+---> Never mutate objects or array in props or state
+        For Eg: If u want to add new item to the list don't mutate it by pushing the item into the list,
+                the reference to the array never changes, bcz pure component check for that,
+                the component will not re-render even if there is a difference,
+                always return new obj or arr while dealing with pure component
+* Differences between Pure Component and Regular Component:
+
+                        Pure Component                      |               Regular Component
+-------------------------------------------------------------------------------------------------------------------------------                                                            
++>  A pure component implements the shouldComponentUpdate,  | +> A regular component does not implement the shouldComponentUpdate,                   
+with shallow props and state comparison                     | it always return true by default
+                                                            |
+
+* Shallow Comparison(SC): (Refer ShallowComponent.jpg)
+    1. Primitive Types:
+        a (SC) b returns true if a and b have same value and are of same Type
+            Eg: string 'vishwas' (SC) string 'vishwas' returns true
+    2. Complex Types:
+        a (SC) b returns true if a and b reference exact same object
+            Eg: var a = [1,2,3]                        var a = {x:1,y:2}
+                var b = [1,2,3]                        var b = {x:1,y:2}
+                var c = a                              var c = a                
+             var ab = (a === b) -> false             var ab = (a === b) -> false         
+             var ac = (a === c) -> true              var ac = (a === c) -> true
+--------------------------------------------------------------------------------------------------------------------------------
+* memo:
+    => what PureComponent is for class component, memo is for functional component
+    => React.memo was introduced in version 16.6
+    => It is a higher order component, bcz React.memo() accepts a component adds some things to the component and returns a new enhanced component
+    => In our case, this is capable of avoiding re-rendering when there as no change in props
+--------------------------------------------------------------------------------------------------------------------------------
+* Refs:
+    => Can be used only for class components and not for functional components
+    => Refs make it possible to access DOM nodes directly within React
+    => React.createRef() commonly created in the constructor, so they can be referenced throughout the component
+    => To attach the ref created, we use the reserved attribute ref
+    => 2 ways to set refs in react, 
+            1. React.createRef()
+            2. callBacks Refs  -----> (older way of using refs and this can be achieved in 4 steps)
+--------------------------------------------------------------------------------------------------------------------------------
+* Refs with class components:
+    => we saw how to add ref in input element, it is possible to add ref in class components too
+--------------------------------------------------------------------------------------------------------------------------------
+* Forwarding Refs: (Refer Notes)
+    => In the 1st example we defined refs in both child and parent, but here we will be forwarding Refs from parent to child
+    => React.forwardRef() --> Using this we will be able to achieve 
+    => Difference is:
+            For anyone who is confused between the previous video and this, let me break it down for you.
+'ref 'in React  is basically used to access HTML nodes, in the previous we learned that refs can also be used to access components in React, in a similar way we did the HTML element. 
+In this video we referenced the Child Component as well, but then we used React.forwardRef() to forward the reference from the child component to the input element inside the component.
+Thus we were directly able to access the focus() method of <input> tag directly in our Parent Component via this.inputRef.current.focus(). if we would'nt have forwarded the ref  we could'nt have accessed it directly via  the current object.
+--------------------------------------------------------------------------------------------------------------------------------
+* Portals:
+    => React protals provide a way to render children in a DOM node, that exists outside DOM hirearchy of the parent Component
+    => Basically the react code is rendered by index.html in that we will have <div id="root" />
+                                                                                          |
+                                                    In this we will call in index.js as document.getElementById('root')  
+    =>  Everything comes under this <div id="root /> hirearchy, React Portals have the ability to break out of this DOM tree
+
+Steps:
+        1. In index.html add <div id="potal-root" />
+        2. Create a new Component PortalDemo.js
+        3. To render the component under "potal-root" we need to    
+                    => import ReactDOM from 'react-DOM'
+                    => Instead of simply returning the JSX, 
+
+                                                Takes two parameters
+                                                         ^
+                                                         |
+                        return ReactDOM.createPortal(____,____)
+
+                                                       |    |
+    Any element that react can rendered             < -      ->DOM node to Mount element
+                JSX, Number, String, Components
+        
+            (Check in console, In which DOM node the JSX is rendered)
+
+Need:
+    => When child Component is a modal, popup, tooltip
+    => PLS VERIFY: https://codesandbox.io/s/00254q4n6p
+    => Event Bubling: A event is fired from inside a portal, will propagate to ancestors in containg react-tree, even if those elements are not present in DOM nodes
+            (It behaves Like normal react child)
+    => PLS VERIFY: https://codepen.io/gaearon/pen/jGBWpE
+    
+--------------------------------------------------------------------------------------------------------------------------------
+* Error Boundary:
+    => A class component that implements either one or both of the Lifecycle methods "getDerivedStateFromError" or "componentDidCatch" becomes an error Boundary
+        ---> getDerivedStateFromError: A static method used to render a fallback UI after an error is thrown
+        ---> componentDidCatch: Used to log error information
+    => PLS VERIFY: Notes for better understanding 
+    => Error Boundaries catch errors during rendering , in LifeCycle Methods and constructors
+    => They won't catch errors in Event Handlers, for this u need to use regular try catch statements
+    
+                        **************** PLS VERIFY NOTES AND ErrorBoundary.jpg ****************  
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Higher Order Components ( hoc ):
+    Need:
+        * Need: To avoid repeating of same code (REFER NOTES)
+        * To share common functionality between the components
+    Definition:
+        * A pattern where a function takes a component as an argument and returns a new component
+           => const NewComponent= higherOrderComponent( originalComponent )
+           => const EnhancedComponent= higherOrderComponent( originalComponent )
+           =>{ Best Example: const IronMan = withSuit( TonyStark ) }
+    (hoc is a function accepts a component and returns an enhanced component)
+    2 Important Points to remember:
+        1st Point:
+            *  When u pass a prop from APP.js and ur using that in HCHoverCounter or HCClickCounter components, it won't render 
+            *  This will be the 1st mistake when u use hoc, this happens bcz the props are sent to the hoc not HCClickCounter or HCHoverCounter
+            *  In render mthd of hoc, u can make console statement and check
+            *  To Avoid this, we use spread operator {...this.props} => this helps to pass the remaining props that are specified
+            *  So when u create hoc, pls make sure to pass the rest of the props
+        2nd Point:
+            *  Passing parameters to the hoc func
+            *  Example: Instead of incrementing to 1 for both click and hover, incrementing different numbers for hover and click 
+                        This can be done by Passing parameters to the hoc func
+            *  Instead of passing WrapppedComponent pass an another parameter incrementNumber
+            *  While exporting "export default hcClickHoverParent(HCHoverCounter,10)" pass the number of times to be incremented
+    Used in popular react Libraries connect hoc with redux , with router , with Material UI and so on
+--------------------------------------------------------------------------------------------------------------------------------
+* Render Props:
+    => Other pattern to share code in react Components ( same as hoc )
+         Need:
+        * Need: To avoid repeating of same code 
+        * To share common functionality between the components
+    Definition: 
+        * The term "render prop" refers to a technique for " sharing code " between React Components using a " prop whose value is function "
+    
+                                                            <====imp====>                                    <==============imp============>
+   
+* Code:  endering props by passing function to attribute
+
+   <ClickHoverUserRender
+      render={(count,incrementCount)=>(   /* Here we should use ( ) not { } bcz ur passing props as attribute */ 
+        <div>                              
+        <ClickCounterTwo count={count} incrementCount={incrementCount} /> 
+        {/* <HoverCounterTwo count={count} incrementCount={incrementCount} /> If u call both at time it will increment both */}
+        </div>
+      )}
+    />
+    <ClickHoverUserRender render={(count,incrementCount)=>(
+      <HoverCounterTwo count={count} incrementCount={incrementCount} />
+    )}
+    />
+     
+* Code:  Rendering props by passing children
+
+    <ClickHoverUserRender >
+      {(count,incrementCount)=> (
+        <HoverCounterTwo count={count} incrementCount={incrementCount} />
+      )}
+    </ClickHoverUserRender>
+    <ClickHoverUserRender>
+      {(count,incrementCount)=>(
+        <ClickCounterTwo count={count} incrementCount={incrementCount} />
+      )}
+    </ClickHoverUserRender>
+
+--------------------------------------------------------------------------------------------------------------------------------
+* Context ( REFER NOTES and Context.jpg )
+    => Need of Context
+        Illustration
+
+                                                          |  App component | (username)
+                                                                   |
+                                                                   |
+                            -----------------------------------------------------------------------------
+                            |                                      |                                    |
+                        |   A   | (username)                       B      (username)                    C     (username)
+                                                                   |                                    |
+                                                                |  D  |   (username)                    E     (username) 
+                                                                                                        |
+                                                                                                     |  F  |  (username)
+
+        => If A, D, F are supposed to display LoggedIn username, that info is maintained as property in App component
+            -> For A = Pretty Forward
+            -> For D = B->D
+            -> For F = C->E->F               
+        => Imagine if components nested 10 level deep or more, all the components in b/w has to sent the props
+        => Especially this cause issue in
+                * Language preference
+                * UI theme
+                * Authenticated user etc..
+    *************************** To directly sent the data, this were the CONTEXT comes to picture **************************
+    Definition:
+        * Context provides a way to pass data through the Component tree without having to pass props down manually at every level
+
+    3 steps to implement Context:
+        1. Create the Context
+        2. Provide a Context value
+        3. Consume the Context value in the necessary components
+
+    Explanation:
+
+    1. Create the Context
+        * Create userContext.js file   
+        * React.createContext() 
+        * userProvider()
+        * userConsumer()
+    2. Provide a Context value
+        * The provider should be at the top level and pass values using value attribute
+        * This value can be consumed at any of the descedant component
+    3. Consume the Context value in the necessary components
+        * Here use the consumer component and pass function as its child
+
+Additional points on Context API:
+
+    * We can set a default value in React.createContext('Keerthi') 
+    * Context Type Property
+        This is slight tricky, but u can remember...
+            what I understood is...
+                    => 1stly we will be creating context
+                    => 2ndly we will be providing
+                    => 3rdly we will be consuming
+
+                In consuming we can consume in 2 ways
+                    1. The consumer component and pass function as its child
+                    2. contextType
+                        => Export UserContext iteself
+                        => className.contextType = UserContext
+                        => To use the context value, call the value by this.context
+                                        *
+                                        *
+                                        *
+--------------------------------------- OR ------------------------------------------------------
+                                        *
+                                        *
+                                        *
+                        => Export UserContext iteself
+                        => static contextType=UserContext
+
+    contextType is simpler than consuming(Method 1) but contextType has 2 limitations
+
+    Limitations of contextType:
+        => It can used only in class component
+        => you can subscribe only to single Context using contextType
+            For explanation see the scrnsht contextType_consuming_multiple_context.jpg , you can know the advantage of the method 1
+--------------------------------------------------------------------------------------------------------------------------------
+React and HTTP:
+
+                    props & state                                                                           Fetch
+Web Application  <-------------------------------------HTTP--------------------------------------------------------  Server
+(React App)      -------------------------------------Library------------------------------------------------------>
+                 send                                 (axios)
+
+
+* https://jsonplaceholder.typicode.com/ => Fake online REST API for testing and prototyping
+* Axios:
+    => Axios is an HTTP client library that allows you to make requests to a given endpoint
+    => To install axios --- 'npm install axios'
+    => Promised based library, we can add .then() and .catch() blocks
+
+Examples:
+=> React Fetch GET request: get all Tutorials, get Tutorial by Id, find Tutorial by title
+=> React Fetch POST request: create new Tutorial
+=> React Fetch PUT request: update an existing Tutorial
+=> React Fetch DELETE request: delete a Tutorial, delete all Tutorials
+==================================================== *** More to know *** ======================================================
+
+1. component can return only one tag, so we will be wrappping all the tag inside a <div> tag mostly!
+2. In functional component, while calling props we use props.<attribute name>
+3. In class component, while calling props we use this.props.<attribute name> {'this' is reserved in class component} basically accessing props with 'this' keyword
+4. To influence what is rendered on the screen = Props, State
+5. In setState call is Asynchronous so value is rendered before the actual value is set
+6. If we want to write a code only after the state is updated we can use callBack function
+7. W3 schools, Stack Overflow, MDN web docs
+8. Formik library =>Helps u with forms in react
+9.As the browser does not understand JSX code, this gets converted to JavaScript using the plugins of the babel.
+10.The CSS properties has to be mentioned within an object and the object has to be provided as a value to the style property within an expression. The 2 pairs of curly braces are used, where the first pair is the object with style properties and second pair is the JSX expression specified to the style property.
+When we have CSS properties with multiple words like background-color, font-family etc, in React, those properties should be camelCased by removing hypen Eg: fontFamily, backgroundColor
+11.JS objects => props and state.
+12.Why super() ?
+    As the user-defined component extends React.Component, it becomes a child component of it. Hence, whenever a child component has a constructor, it has to call the parent class's constructor using the super() method. And super() method should be the first statement within a constructor.
+13.setState() is asynchronous (REFER W3 SCHOOLS)
+  CallBack Function:
+    "I will call back later!"
+    A callback is a function passed as an argument to another function
+    This technique allows a function to call another function
+    A callback function can run after another function has finished
+    When you pass a function as an argument, remember not to use parenthesis.
+  Asynchronous JavaScript
+    "I will finish later!"
+    Functions running in parallel with other functions are called asynchronous
+    A good example is JavaScript setTimeout()
+    When you pass a function as an argument, remember not to use parenthesis.
+--------------------------------------------------------------------------------------------------------------------------------
+
+==================================================== *** Need to Know *** ======================================================
+1.
+    import * as serviceWorker from './serviceWorker';
+    serviceWorker.unregister();
+
+2. 
+    React.children.map
+
+3.
+   * We can set default values to the props using the defaultProps property as shown below:
+
+    Syntax:
+    AppComp.defaultProps = {
+        element1 : "Hello",
+        element2: "default value", 
+    }
+    * In case there is no value passed to the prop and if it is being accessed within the component, then the default values will be considered.
+    * Here, we need to mention to which component, we need to set the default values for props.
+
+4. TypeChecking props
+
+   => As the application grows, there will be a lot of bugs with type checking. In some of the applications, we can use JavaScript extensions such as Typescript to type check the whole application. But here in React, it is providing some built-in typechecking abilities. To valid the props for a component, we can use propTypes property.
+
+   => 'propTypes' are used to validate props using different validators. For invalid value, a warning will be logged on the console.
